@@ -17,23 +17,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 2. Add upstream remote and fetch qml branch
-      - name: Fetch upstream qml branch
+      # 2. Fetch upstream
+      - name: Fetch upstream qml
         run: |
           git remote add upstream https://github.com/raspberrypi/rpi-imager.git
-          git fetch upstream qml
+          git fetch upstream
 
-      # 3. Create local build branch based on upstream/qml
+      # 3. Create build branch from upstream/qml
       - name: Create build branch
-        run: git checkout upstream/qml -B build-branch
+        run: git checkout -B build-branch upstream/qml
 
-      # 4. Apply CLI patch
+      # 4. Merge your cli-patch branch to preserve patches folder
+      - name: Merge cli-patch branch
+        run: git merge cli-patch --allow-unrelated-histories -m "Merge cli-patch into build-branch"
+
+      # 5. Apply CLI patch
       - name: Apply CLI patch
         run: git apply --whitespace=fix patches/0001-cli-friendly.patch
-
-      # 5. Merge your cli-patch branch (contains workflow + patch folder)
-      - name: Merge cli-patch branch
-        run: git merge cli-patch --allow-unrelated-histories -m "Merge cli-patch"
 
       # 6. Setup Qt 6.9 with Mingw64
       - name: Setup Qt 6.9 Mingw64
@@ -44,22 +44,22 @@ jobs:
           target: win64_mingw
           dir: C:\Qt
 
-      # 8. Configure build
+      # 7. Configure build
       - name: Configure CMake
         run: cmake -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release
 
-      # 9. Build
+      # 8. Build
       - name: Build rpi-imager
         run: cmake --build build --config Release
 
-      # 10. Package artifact
+      # 9. Package artifact
       - name: Package artifact
         run: |
           mkdir dist
           copy build\rpi-imager.exe dist\rpi-imager.exe
           powershell Compress-Archive dist\rpi-imager.exe rpi-imager-cli-win64.zip
 
-      # 11. Upload artifact
+      # 10. Upload artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
