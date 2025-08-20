@@ -35,13 +35,14 @@ jobs:
       - name: Apply CLI patch
         run: git apply --whitespace=fix patches/0001-cli-friendly.patch
 
-      # 6. Setup Qt 6.9 with Mingw64
+      # 6. Setup Qt 6.9 Mingw64
       - name: Setup Qt 6.9 Mingw64
         uses: jurplel/install-qt-action@v4
         with:
           version: 6.9
           host: windows
-          target: win64_mingw
+          target: desktop          # Must be 'desktop'
+          arch: mingw64            # 64-bit Mingw toolchain
           dir: C:\Qt
 
       # 7. Configure build
