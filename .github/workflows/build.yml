@@ -47,7 +47,7 @@ jobs:
 
       # 7. Configure build
       - name: Configure CMake
-        run: cmake -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S src -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DQt6_DIR=C:/Qt/6.9.0/mingw_64/lib/cmake/Qt6 -DMINGW64_ROOT=C:/Qt/Tools/mingw1310_64
 
       # 8. Build
       - name: Build rpi-imager
