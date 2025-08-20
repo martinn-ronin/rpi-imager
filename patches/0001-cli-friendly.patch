@@ -1,0 +1,20 @@
+diff --git a/src/cli.cpp b/src/cli.cpp
+index ed5aa062..fea88586 100644
+--- a/src/cli.cpp
++++ b/src/cli.cpp
+@@ -19,15 +19,6 @@ static void devnullMsgHandler(QtMsgType, const QMessageLogContext &, const QStri
+ 
+ Cli::Cli(int &argc, char *argv[]) : QObject(nullptr)
+ {
+-#ifdef Q_OS_WIN
+-    /* Allocate console on Windows (only needed if compiled as GUI program) */
+-    if (::AttachConsole(ATTACH_PARENT_PROCESS) || ::AllocConsole())
+-    {
+-        freopen("CONOUT$", "w", stdout);
+-        freopen("CONOUT$", "w", stderr);
+-        std::ios::sync_with_stdio();
+-    }
+-#endif
+     _app = new QCoreApplication(argc, argv);
+     _app->setOrganizationName("Raspberry Pi");
+     _app->setOrganizationDomain("raspberrypi.org");
