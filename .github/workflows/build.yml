@@ -42,7 +42,7 @@ jobs:
           version: 6.9
           host: windows
           target: desktop          # Must be 'desktop'
-          arch: mingw64            # 64-bit Mingw toolchain
+          arch: win64_mingw        # 64-bit Mingw toolchain
           dir: C:\Qt
 
       # 7. Configure build
