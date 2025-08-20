@@ -53,14 +53,19 @@ jobs:
       - name: Build rpi-imager
         run: cmake --build build --config Release
 
-      # 9. Package artifact
+      # 9. Deploy Qt DLLs
+      - name: Deploy Qt DLLs
+        run: |
+          C:\Qt\6.9.0\mingw_64\bin\windeployqt.exe build\rpi-imager.exe
+
+      # 10. Package artifact
       - name: Package artifact
         run: |
           mkdir dist
-          copy build\rpi-imager.exe dist\rpi-imager.exe
-          powershell Compress-Archive dist\rpi-imager.exe rpi-imager-cli-win64.zip
+          xcopy build\* dist\ /s /y
+          powershell Compress-Archive dist rpi-imager-cli-win64.zip
 
-      # 10. Upload artifact
+      # 11. Upload artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
