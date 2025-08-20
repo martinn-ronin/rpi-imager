@@ -39,7 +39,6 @@ jobs:
       - name: Install dependencies
         run: |
           choco install -y qt6-setup ninja cmake
-          refreshenv
 
       # 7. Configure CMake
       - name: Configure
