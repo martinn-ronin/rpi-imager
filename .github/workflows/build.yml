@@ -38,7 +38,7 @@ jobs:
       # 6. Install Qt + Mingw64 toolchain
       - name: Install dependencies
         run: |
-          choco install -y qt6 ninja cmake
+          choco install -y qt6 ninja cmake --skip-automation-scripts
 
       # 7. Configure CMake
       - name: Configure
